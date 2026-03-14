@@ -12,10 +12,12 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      # UPDATED: Changed from v3 to v4
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      # UPDATED: Changed from v4 to v5
+      uses: actions/setup-python@v5
       with:
         python-version: '3.9'
 
