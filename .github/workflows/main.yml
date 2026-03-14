@@ -3,19 +3,24 @@ name: Check Krishak Bandhu Status
 on:
   schedule:
     - cron: '0 */6 * * *' # প্রতি ৬ ঘণ্টা পর পর রান হবে
-  workflow_dispatch: # ম্যানুয়ালি রান করার জন্য
+  workflow_dispatch: # ম্যানুয়ালি রান করার জন্য (টেস্ট করার জন্য এটি দরকার)
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    # Node.js 24 এনভায়রনমেন্ট নিশ্চিত করার জন্য এটি যোগ করা হয়েছে
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # v3 থেকে v4 এ আপডেট করা হয়েছে
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # v4 থেকে v5 এ আপডেট করা হয়েছে
         with:
-          python-version: '3.9'
+          python-version: '3.11' # আরও আধুনিক এবং স্থিতিশীল ভার্সন
 
       - name: Install dependencies
         run: |
