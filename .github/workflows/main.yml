@@ -1,33 +1,34 @@
-name: Check Krishak Bandhu Status
+name: Krishak Bandhu Automation
 
 on:
   schedule:
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+    # প্রতিদিন দুপুর ১২:৩০ UTC (অর্থাৎ ভারতীয় সময় সন্ধ্যা ৬:৩০)
+    - cron: '30 12 * * *'
+  workflow_dispatch: # এটি থাকলে আপনি নিজেও যখন ইচ্ছা বাটন টিপে রান করতে পারবেন
 
-# এই লাইনটি রানারকে সরাসরি Node.js 24 ব্যবহার করতে বাধ্য করবে
+# Node.js ওয়ার্নিং পুরোপুরি বন্ধ করার জন্য এটি রাখা হলো
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  build:
+  run-script:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Code Checkout
+        uses: actions/checkout@v4 # আপনার স্টাইল ঠিক রেখে শুধু আপডেট ভার্সন দেওয়া হলো
 
-      - name: Set up Python
+      - name: Python Setup
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.9'
 
-      - name: Install dependencies
-        run: |
-          pip install requests beautifulsoup4
+      - name: Install Libraries
+        # আপনি যদি requirements.txt ব্যবহার করতে না চান, তবে সরাসরি নিচে এভাবে লাইব্রেরি ইনস্টল করতে পারেন
+        run: pip install requests beautifulsoup4
 
-      - name: Run script
+      - name: Run Automation Script
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        run: python script.py
+        run: python main.py # আপনার পাইথন ফাইলের নাম main.py রাখতে হবে
         
