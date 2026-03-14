@@ -2,9 +2,13 @@ name: Daily Farmer Search Check
 
 on:
   schedule:
-    # This runs at 00:00 UTC every day (Approx 5:30 AM IST)
-    - cron: '0 0 * * *'
-  workflow_dispatch: # Allows you to run it manually for testing
+    - cron: '0 0 * * *' # Runs every day at 5:30 AM IST
+  workflow_dispatch:
+
+# FIX 1: Research shows setting this environment variable at the top 
+# level silences the warning and forces the runner to Node 24.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
@@ -12,11 +16,11 @@ jobs:
 
     steps:
     - name: Checkout code
-      # UPDATED: Changed from v3 to v4
+      # FIX 2: Updated to v4 (minimum) or v5+ for Node 24 support
       uses: actions/checkout@v4
 
     - name: Set up Python
-      # UPDATED: Changed from v4 to v5
+      # FIX 3: Updated to v5 or v6 which explicitly supports Node 24
       uses: actions/setup-python@v5
       with:
         python-version: '3.9'
